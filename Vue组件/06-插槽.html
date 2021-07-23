@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>插槽</title>
+</head>
+<body>
+    <div id="app">
+        <App></App>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.component('MBtn',{
+            template:`
+            <button>
+                <slot></slot>
+                <slot name='login'></slot>
+                <slot name='submit'></slot>
+            </button>
+            `
+        })
+        const App = {
+            template:`
+                <div> 
+                    <MBtn>登录</MBtn>
+                    <MBtn>注册</MBtn>
+                    <m-btn>  
+                        <template slot='login'>
+                            <a href="#">登录</a>
+                        </template>
+                    </m-btn>  
+                    <m-btn>  
+                        <template slot='submit'>
+                            <a href="#">提交</a>
+                        </template>
+                    </m-btn>  
+                </div>
+            `
+        }
+        new Vue({
+            el:'#app',
+            data:{
+
+            },
+            components:{
+                App
+            }
+        });
+    </script>
+</body>
+</html>

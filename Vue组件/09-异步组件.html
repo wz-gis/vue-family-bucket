@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期</title>
+    <style>
+        .actived{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='app'>
+        <App></App>
+    </div>
+    <script src="./vue.js"></script>
+    <script type="module">
+        const App = {
+            data() {
+                return {
+                    isShow:false
+                }
+
+            },
+            components: {
+                //工厂函数 异步加载模块，动态提高性能
+                Test:()=>import('./Test.js')
+
+            },
+            template: `
+            <div> 
+                <Test v-if='isShow'></Test>
+                <button @click='asyncLoad'>异步加载</button> 
+            </div>
+            `,
+            methods:{
+                asyncLoad(){
+                    this.isShow = !this.isShow;
+                }
+            }
+
+
+        };
+        new Vue({
+            el: '#app',
+            data: {
+
+            },
+            components: {
+                App
+            }
+        })
+
+    </script>
+</body>
+
+</html>

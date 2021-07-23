@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <APP />
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        //子传父
+        //1. 父组件中 绑定自定义的时间！！！
+        //2. 在子组件中去触发原生事件 在事件函数中this.$emit 触发自定义的时间
+        //3. 在父组件中绑定自定义的属性
+        Vue.component('Child',{
+            template:`
+            <div>我是一个子组件
+                <h3>{{childData}}</h3>
+                <input type='text' @input='handleInput' />
+            </div>`,
+            props:['childData'],
+            methods:{
+                handleInput(e){
+                    // console.log(e.target.value);
+                    const val = e.target.value;
+                    this.$emit('inputHandler',val);
+                }
+            }
+        })
+        const App = {
+            data() {
+                return{
+                    msg:'我是父组件的传值',
+                    newVal:'',
+                }
+            },
+            template:`
+            <div>
+                <div>数据是：{{newVal}}</div>
+                <Child :childData = 'msg' @inputHandler='input' ></Child>    
+            </div>
+            `,
+            methods:{
+                input(newVal){
+                    // alert(newVal);
+                    this.newVal = newVal;
+                }
+            }
+        }
+        new Vue({
+            el:'#app',
+
+            components:{
+                App
+            }
+
+        });
+    </script>
+</body>
+</html>

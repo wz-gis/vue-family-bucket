@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <div id='app'>
+        <APP></APP>
+
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        //app组件 html+css+js
+
+        //创建全局组件，组件名+配置 可以任意template使用
+        Vue.component('Vheader',{
+            template:`
+                <div>
+                    我是导航组件
+                </div>
+            `
+        })
+        Vue.component('Vsidebar',{
+            template:`
+                <div>
+                    我是侧边栏组件
+                </div>
+            `
+        })
+        const Vcontent={
+            data(){
+                return{
+                    message:'hello'
+                }
+            },
+            template:`
+                <div>
+                    我是内容组件
+                </div>
+            `
+        }
+   
+        //使用局部组件，建子 挂子 用子
+        //1.创建组件
+        const App = {
+            //注意，在组件中data必须是一个函数，返回一个对象
+            data(){
+                return {
+                    msg:'我是一个app组件'
+                }
+            },
+            template:`
+            <div>
+            <h3>{{hello}}</h3>
+            <button @click='handleClick'>按钮</button>
+            <Vheader />
+            <Vsidebar />
+            <Vcontent />
+            </div>
+            `,
+            methods:{
+                handleClick(){
+                    this.msg = '局部组件'
+                }
+            },
+            computed:{
+                hello(){
+                    return this.msg + 'hello'
+                }
+            },
+            components:{
+                Vcontent
+            }
+        }
+        new Vue({
+            el:"#app",
+            data:{
+
+            },
+            components:{
+                //2.挂在子组件
+                App:App
+            }
+        })
+    </script>
+</body>
+</html>
+<!-- summary 
+1. 局部组件 建子 挂子  用子
+2. 全局组件 建字 用子
+-->

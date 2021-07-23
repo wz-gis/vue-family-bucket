@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算属性 computed</title>
+</head>
+<body>
+    <div id="app">
+        {{reverseMsg}}
+        {{fullName}}
+        <br>
+        <button @click='handleClick'>改变</button>
+        <br>
+        {{content}}
+        <input type="text"v-model='content'@input='handleInput'>
+        <button @click='submit'>提交</button>
+
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <!-- 计算属性最大的优点是可以产生缓存 如果数据没有发生变化，那么直接从缓存中读取 -->
+    <!-- 计算属性setter 经常用于与后端进行交互 -->
+    <script>
+
+        const vm = new Vue({
+            el:"#app",
+            data:{
+                msg:'',
+                firstName:"wang",
+                lastName:"zheng",
+            },
+            methods:{
+                handleClick(){
+                    this.msg = '计算属性'
+                },
+                handleInput:function(event){
+                    const {value} = event.target;
+                    this.content = value;
+                },
+                submit(){
+                    console.log(this.content);
+                }
+            },
+            computed:{
+                reverseMsg:function(){
+                    return this.msg.split('').reverse().join('');
+                },
+                fullName:function(){
+                    return this.firstName + this.lastName;
+                },
+                content:{
+                    set:function(newV){
+                        // console.log(newV);
+                        this.msg = newV;
+                    },
+                    get:function(){
+                        return this.msg;
+
+                    }
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

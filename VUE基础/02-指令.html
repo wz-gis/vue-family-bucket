@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+<style>
+    .active {
+        color: red;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <!-- {{}}和v-text 的作用都是插入值，直接渲染，相当于innertext -->
+        <!-- v-html既可以插值又能插入标签 -->
+        <p v-text='msg'></p>
+        <div v-html='htmlMsg'></div>
+        <!-- v-if 需要删除增加元素，性能消耗大，初始化没有渲染开销 情况：切换频繁少-->
+        <!-- v-show 控制的是样式 情况：切换频繁多-->
+        <div v-if='isShow'>显示</div>
+        <div v-else>隐藏</div>
+        <h3 v-show='show'>正常显示</h3>
+        <!-- v-bind 绑定vue没有的特性 :简写-->
+        <a :href="res.url">{{res.name}}</a>
+        <div><img :src="res.imgSrc" alt=""></img></div>
+        <h3 :class="{active:isActive}">v-bind的用法</h3>
+        <h4 :style="{color:isColor}">v-bind的用法</h4>
+        <h4 style="color:red">v-bind的用法</h4>
+        <!-- v-on绑定事件 @简写 -->
+        <h3>{{num}}</h3>
+        <button v-on:click.once="handleClick">+1</button>
+        <button @click="changeClick">切换</button>
+        <input v-on:keyup.enter='submit'></input>
+        <button v-on:click="submit">提交</button>
+        <!-- MVVM   
+        1.  扫一眼 HTML 模板便能轻松定位在 JavaScript 代码里对应的方法。
+        2.  因为你无须在 JavaScript 里手动绑定事件，你的 ViewModel 代码可以是非常纯粹的逻辑，和 DOM 完全解耦，更易于测试。
+        3.  当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。你无须担心如何清理它们。 
+        -->
+        <!-- v-for 循环 -->
+        <div>
+            <ul>
+                <li v-for='item in menus' :key='item.id'>
+                    <h3>id:{{item.id}} 菜名:{{item.name}}</h3>
+                </li>
+            </ul>
+            <ul>
+                <li v-for='(val,key) in obj' :key="key">
+                    <h3>{{key}}------{{val}}</h3>
+                </li>
+            </ul>
+        </div>
+        <!-- v-model vue的表单 <input>、<textarea> 及 <select> 元素上创建双向数据绑定。-->
+        <div>
+            <!-- input -->
+            <p>{{msg}}</p>
+            <input type="text" v-model='msg'>
+            <!-- 多行文本 -->
+            <textarea type="text" v-model='msg' placeholder="edit me "></textarea>>
+            <p style="white-space:pre-line;">Messages is {{msg}}</p>
+            <!-- label 复选框单选 -->
+            <label for="checkbox1">{{checked}}</label>
+            <input type="checkbox" id='checkbox1' v-model='checked'>
+            <br>
+            <!-- 多个复选框 -->
+            <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+            <label for="jack">Jack</label>
+            <input type="checkbox" id="john" value="John" v-model="checkedNames">
+            <label for="john">John</label>
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+            <label for="mike">Mike</label>
+            <br>
+            <span>CheckedName: {{checkedNames}}</span>
+            <!-- 选择框 -->
+            <div>
+                <select v-model='selected'>
+                    <option disabled value="">请选择</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                </select>
+                <span>Selected:{{ selected }}</span>
+            </div>
+            <!-- v-for 渲染的动态选项 -->
+            <select v-model='selected'>
+                <option v-for="option in options" :value="option.value">
+                    {{option.text}}
+                </option>
+            </select>
+            <span>Selected: {{ selected }}</span>
+            <!-- 如果要自动过滤用户输入的首尾空白字符，可以给 v-model 添加 trim 修饰符： -->
+            <input v-model.trim="msg">
+
+        </div>
+
+
+
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello',
+                htmlMsg: '<h3>wz</h3>',
+                isShow: Math.random() > 0.5,
+                show: false,
+                isActive: false,
+                checked: false,
+                isColor: 'green',
+                num: 0,
+                checkedNames: [],
+                selected: 'A',
+                res: {
+                    name: 'wz',
+                    age: 23,
+                    url: 'https://www.hao123.com',
+                    imgSrc: './img/1.jpg'
+                },
+                menus: [
+                    { id: 1, name: '烤韭菜' },
+                    { id: 2, name: '五花肉' },
+                    { id: 3, name: '牛肉串' },
+                    { id: 4, name: '番茄汤' },
+                ],
+                obj: {
+                    title: 'hhhh',
+                    author: 'wz',
+                },
+                options: [
+                    { text: 'One', value: 'A' },
+                    { text: 'Two', value: 'B' },
+                    { text: 'Three', value: 'C' }
+                ]
+
+            },
+            methods: {
+                handleClick() {
+                    this.num += 1;
+                },
+                changeClick() {
+                    this.isActive = !this.isActive;
+                },
+                submit() {
+                    alert('1111111');
+                }
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>

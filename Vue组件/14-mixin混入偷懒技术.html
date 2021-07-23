@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mixin</title>
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        const myMixin = {
+            data(){
+                return {
+                    msg:"123"
+                }
+            },
+            created() {
+                this.sayHello();
+            },
+            methods: {
+                sayHello(){
+                    console.log('hello mixin');
+                }
+            },
+        }
+        //mixin 主要是来分发Vue组件中的可复用功能
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'wz'
+            },
+            mixins:[myMixin]
+        })
+    </script>
+</body>
+</html>

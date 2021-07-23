@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue watch</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model='msg'>
+        <h3>{{msg}}</h3>
+
+        <h3>{{stus[0].name}}</h3>
+        <button @click='stus[0].name="myl"'>改变</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        //基本数据类型使用watch直接监听，复杂数据类型要深度监视
+        new Vue({
+            el:"#app",
+            data:{
+                msg:'',
+                stus:[{name:'wz'}],
+            },
+            watch:{
+                //key是属于data对象的属性名   value是件事后的行为， newv表示新值 oldv表示旧值
+                'msg':function(newV,oldV){
+                    console.log(newV,oldV);
+                },
+                // 深度监视： object array 监听复杂类型对象
+                "stus":{
+                    deep:'true',
+                    handler:function(newV,oldV){
+                        console.log(newV[0].name);
+                        alert(newV[0].name);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

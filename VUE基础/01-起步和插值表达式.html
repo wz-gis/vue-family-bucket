@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>起步</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 插值表达式 -->
+        <!-- 只能插值文本数值！！！ -->
+        {{msg}}
+        {{ {id:1} }}
+        {{ 1>2 ? 'zhende':'jiade'}}
+        {{getContent()}}
+        <input type="input" v-model= "msg" />
+    </div>
+    <script>
+        const vm = new Vue({
+            el:"#app",
+            // 数据属性
+            data:{
+                msg:"hello,world,wz",
+                msg2:"hello,world,cht",
+            },
+            // 方法
+            methods:{
+                getContent(){
+                    return this.msg+'   '+this.msg2;
+                }
+            }
+        })
+        console.log();
+    </script>
+    
+</body>
+</html>
